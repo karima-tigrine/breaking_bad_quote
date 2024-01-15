@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - karima-tigrine
+name: Build and deploy Python app to Azure Web App - karima-tigrine - exercice
 
 on:
   push:
@@ -22,16 +22,14 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Create and start virtual environment
+      - name: Create, start virtual environment and Install dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+          pip install pipenv 
+          pipenv install --dev
         
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-
+      - name: Launch tests
+        run: pipenv run nosetests
+        
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
 
@@ -66,4 +64,4 @@ jobs:
         with:
           app-name: 'karima-tigrine'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8922A8320BA84409A107291AE997B0DA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_856876C6E205425DB53586300F55DCBB }}
