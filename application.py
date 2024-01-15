@@ -1,22 +1,17 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from quote import breaking_quote
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-
-#homepage endpoint
-@app.route("/")
+@application.route("/")
 def index():
-    return "<h1> Welcome to the home page of karimaaaaaaaaaa </h1>"
+    return render_template('index.html')
 
-
-#quote endpoint
-@app.route("/quote")
+@application.route("/quote")
 def quote():
   random_quote = breaking_quote()
-  return jsonify({"quote": random_quote})
+  return jsonify({ "quote": random_quote })
 
 
-#this part is executed when the module is called directly - "pipenv run python app.py"
 if __name__ == "__main__":
-    app.run(debug=True)
+    application.run(debug=True).run(debug=True)
